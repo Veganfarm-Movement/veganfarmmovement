@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RescueIndexRouteImport } from './routes/rescue.index'
 import { Route as ApiPublicDonationsRouteImport } from './routes/api/public/donations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RescueIndexRoute = RescueIndexRouteImport.update({
+  id: '/rescue/',
+  path: '/rescue/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
@@ -25,27 +31,31 @@ const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rescue/': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rescue': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rescue/': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/donations'
+  fullPaths: '/' | '/rescue/' | '/api/public/donations'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/donations'
-  id: '__root__' | '/' | '/api/public/donations'
+  to: '/' | '/rescue' | '/api/public/donations'
+  id: '__root__' | '/' | '/rescue/' | '/api/public/donations'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RescueIndexRoute: typeof RescueIndexRoute
   ApiPublicDonationsRoute: typeof ApiPublicDonationsRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rescue/': {
+      id: '/rescue/'
+      path: '/rescue'
+      fullPath: '/rescue/'
+      preLoaderRoute: typeof RescueIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/donations': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RescueIndexRoute: RescueIndexRoute,
   ApiPublicDonationsRoute: ApiPublicDonationsRoute,
 }
 export const routeTree = rootRouteImport

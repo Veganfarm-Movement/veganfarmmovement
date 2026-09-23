@@ -7,7 +7,7 @@ import { listPublicCases } from "@/lib/cases.functions";
 
 const casesQuery = queryOptions({ queryKey: ["public-cases"], queryFn: () => listPublicCases() });
 
-export const Route = createFileRoute("/rescue")({
+export const Route = createFileRoute("/rescue/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(casesQuery),
   head: () => ({
     meta: [
