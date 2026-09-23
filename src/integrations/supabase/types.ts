@@ -14,16 +14,246 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      case_expenses: {
+        Row: {
+          amount: number
+          case_id: string
+          created_at: string
+          expense_date: string
+          id: string
+          label: string
+        }
+        Insert: {
+          amount: number
+          case_id: string
+          created_at?: string
+          expense_date?: string
+          id?: string
+          label: string
+        }
+        Update: {
+          amount?: number
+          case_id?: string
+          created_at?: string
+          expense_date?: string
+          id?: string
+          label?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_expenses_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "rescue_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      case_updates: {
+        Row: {
+          case_id: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          title: string
+          update_date: string
+          update_type: string
+        }
+        Insert: {
+          case_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          title: string
+          update_date?: string
+          update_type?: string
+        }
+        Update: {
+          case_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          title?: string
+          update_date?: string
+          update_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "case_updates_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "rescue_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      donations: {
+        Row: {
+          admin_notes: string | null
+          amount: number
+          case_id: string
+          created_at: string
+          donor_name: string
+          id: string
+          mobile_number: string
+          payment_reference: string
+          reference_id: string
+          screenshot_path: string | null
+          status: Database["public"]["Enums"]["donation_status"]
+          updated_at: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount: number
+          case_id: string
+          created_at?: string
+          donor_name: string
+          id?: string
+          mobile_number: string
+          payment_reference: string
+          reference_id: string
+          screenshot_path?: string | null
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          admin_notes?: string | null
+          amount?: number
+          case_id?: string
+          created_at?: string
+          donor_name?: string
+          id?: string
+          mobile_number?: string
+          payment_reference?: string
+          reference_id?: string
+          screenshot_path?: string | null
+          status?: Database["public"]["Enums"]["donation_status"]
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_case_id_fkey"
+            columns: ["case_id"]
+            isOneToOne: false
+            referencedRelation: "rescue_cases"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rescue_cases: {
+        Row: {
+          amount_raised: number
+          amount_required: number | null
+          animal_name: string
+          animal_photo_url: string | null
+          animal_type: string | null
+          created_at: string
+          description: string | null
+          donation_count: number
+          id: string
+          is_active: boolean
+          location: string | null
+          medical_bill_url: string | null
+          poster_url: string | null
+          qr_code_url: string | null
+          slug: string
+          status: Database["public"]["Enums"]["case_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount_raised?: number
+          amount_required?: number | null
+          animal_name: string
+          animal_photo_url?: string | null
+          animal_type?: string | null
+          created_at?: string
+          description?: string | null
+          donation_count?: number
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          medical_bill_url?: string | null
+          poster_url?: string | null
+          qr_code_url?: string | null
+          slug: string
+          status?: Database["public"]["Enums"]["case_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount_raised?: number
+          amount_required?: number | null
+          animal_name?: string
+          animal_photo_url?: string | null
+          animal_type?: string | null
+          created_at?: string
+          description?: string | null
+          donation_count?: number
+          id?: string
+          is_active?: boolean
+          location?: string | null
+          medical_bill_url?: string | null
+          poster_url?: string | null
+          qr_code_url?: string | null
+          slug?: string
+          status?: Database["public"]["Enums"]["case_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      next_donation_reference: { Args: never; Returns: string }
+      recalc_case_totals: { Args: { _case_id: string }; Returns: undefined }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      case_status:
+        | "active"
+        | "treatment_ongoing"
+        | "funding_complete"
+        | "recovery"
+        | "closed"
+      donation_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +380,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      case_status: [
+        "active",
+        "treatment_ongoing",
+        "funding_complete",
+        "recovery",
+        "closed",
+      ],
+      donation_status: ["pending", "verified", "rejected"],
+    },
   },
 } as const
