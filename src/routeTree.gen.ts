@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as TransparencyRouteImport } from './routes/transparency'
 import { Route as RescueIndexRouteImport } from './routes/rescue.index'
+import { Route as RescueSlugRouteImport } from './routes/rescue.$slug'
 import { Route as ApiPublicDonationsRouteImport } from './routes/api/public/donations'
 
 const IndexRoute = IndexRouteImport.update({
@@ -18,9 +22,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransparencyRoute = TransparencyRouteImport.update({
+  id: '/transparency',
+  path: '/transparency',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RescueIndexRoute = RescueIndexRouteImport.update({
   id: '/rescue/',
   path: '/rescue/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RescueSlugRoute = RescueSlugRouteImport.update({
+  id: '/rescue/$slug',
+  path: '/rescue/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
@@ -31,30 +55,68 @@ const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/transparency': typeof TransparencyRoute
+  '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/transparency': typeof TransparencyRoute
+  '/rescue/$slug': typeof RescueSlugRoute
   '/rescue': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/transparency': typeof TransparencyRoute
+  '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/rescue/' | '/api/public/donations'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/how-it-works'
+    | '/transparency'
+    | '/rescue/$slug'
+    | '/rescue/'
+    | '/api/public/donations'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/rescue' | '/api/public/donations'
-  id: '__root__' | '/' | '/rescue/' | '/api/public/donations'
+  to:
+    | '/'
+    | '/about'
+    | '/how-it-works'
+    | '/transparency'
+    | '/rescue/$slug'
+    | '/rescue'
+    | '/api/public/donations'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/how-it-works'
+    | '/transparency'
+    | '/rescue/$slug'
+    | '/rescue/'
+    | '/api/public/donations'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  HowItWorksRoute: typeof HowItWorksRoute
+  TransparencyRoute: typeof TransparencyRoute
+  RescueSlugRoute: typeof RescueSlugRoute
   RescueIndexRoute: typeof RescueIndexRoute
   ApiPublicDonationsRoute: typeof ApiPublicDonationsRoute
 }
@@ -68,11 +130,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transparency': {
+      id: '/transparency'
+      path: '/transparency'
+      fullPath: '/transparency'
+      preLoaderRoute: typeof TransparencyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rescue/': {
       id: '/rescue/'
       path: '/rescue'
       fullPath: '/rescue/'
       preLoaderRoute: typeof RescueIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rescue/$slug': {
+      id: '/rescue/$slug'
+      path: '/rescue/$slug'
+      fullPath: '/rescue/$slug'
+      preLoaderRoute: typeof RescueSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/donations': {
@@ -87,6 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  HowItWorksRoute: HowItWorksRoute,
+  TransparencyRoute: TransparencyRoute,
+  RescueSlugRoute: RescueSlugRoute,
   RescueIndexRoute: RescueIndexRoute,
   ApiPublicDonationsRoute: ApiPublicDonationsRoute,
 }
