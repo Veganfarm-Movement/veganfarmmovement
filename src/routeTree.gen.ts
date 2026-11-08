@@ -10,21 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as TransparencyRouteImport } from './routes/transparency'
 import { Route as RescueIndexRouteImport } from './routes/rescue.index'
 import { Route as RescueSlugRouteImport } from './routes/rescue.$slug'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authenticated/admin.donations'
 import { Route as ApiPublicDonationsRouteImport } from './routes/api/public/donations'
+import { Route as AuthenticatedAdminCasesIndexRouteImport } from './routes/_authenticated/admin.cases.index'
+import { Route as AuthenticatedAdminCasesCaseIdRouteImport } from './routes/_authenticated/admin.cases.$caseId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -47,73 +62,130 @@ const RescueSlugRoute = RescueSlugRouteImport.update({
   path: '/rescue/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminDonationsRoute =
+  AuthenticatedAdminDonationsRouteImport.update({
+    id: '/admin/donations',
+    path: '/admin/donations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
   id: '/api/public/donations',
   path: '/api/public/donations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminCasesIndexRoute =
+  AuthenticatedAdminCasesIndexRouteImport.update({
+    id: '/admin/cases/',
+    path: '/admin/cases/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminCasesCaseIdRoute =
+  AuthenticatedAdminCasesCaseIdRouteImport.update({
+    id: '/admin/cases/$caseId',
+    path: '/admin/cases/$caseId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/how-it-works': typeof HowItWorksRoute
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/admin/cases/': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/how-it-works': typeof HowItWorksRoute
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue': typeof RescueIndexRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/admin/cases': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/how-it-works': typeof HowItWorksRoute
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
+  '/_authenticated/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/_authenticated/admin/cases/': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/how-it-works'
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue/'
+    | '/admin/donations'
     | '/api/public/donations'
+    | '/admin/'
+    | '/admin/cases/$caseId'
+    | '/admin/cases/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/auth'
     | '/how-it-works'
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue'
+    | '/admin/donations'
     | '/api/public/donations'
+    | '/admin'
+    | '/admin/cases/$caseId'
+    | '/admin/cases'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/how-it-works'
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue/'
+    | '/_authenticated/admin/donations'
     | '/api/public/donations'
+    | '/_authenticated/admin/'
+    | '/_authenticated/admin/cases/$caseId'
+    | '/_authenticated/admin/cases/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   HowItWorksRoute: typeof HowItWorksRoute
   TransparencyRoute: typeof TransparencyRoute
   RescueSlugRoute: typeof RescueSlugRoute
@@ -130,11 +202,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -165,6 +251,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RescueSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/donations': {
+      id: '/_authenticated/admin/donations'
+      path: '/admin/donations'
+      fullPath: '/admin/donations'
+      preLoaderRoute: typeof AuthenticatedAdminDonationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/donations': {
       id: '/api/public/donations'
       path: '/api/public/donations'
@@ -172,12 +272,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicDonationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/cases/': {
+      id: '/_authenticated/admin/cases/'
+      path: '/admin/cases'
+      fullPath: '/admin/cases/'
+      preLoaderRoute: typeof AuthenticatedAdminCasesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/cases/$caseId': {
+      id: '/_authenticated/admin/cases/$caseId'
+      path: '/admin/cases/$caseId'
+      fullPath: '/admin/cases/$caseId'
+      preLoaderRoute: typeof AuthenticatedAdminCasesCaseIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminDonationsRoute: typeof AuthenticatedAdminDonationsRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminCasesCaseIdRoute: typeof AuthenticatedAdminCasesCaseIdRoute
+  AuthenticatedAdminCasesIndexRoute: typeof AuthenticatedAdminCasesIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminDonationsRoute: AuthenticatedAdminDonationsRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminCasesCaseIdRoute: AuthenticatedAdminCasesCaseIdRoute,
+  AuthenticatedAdminCasesIndexRoute: AuthenticatedAdminCasesIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   HowItWorksRoute: HowItWorksRoute,
   TransparencyRoute: TransparencyRoute,
   RescueSlugRoute: RescueSlugRoute,
