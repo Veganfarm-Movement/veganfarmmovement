@@ -18,7 +18,10 @@ import { Route as TransparencyRouteImport } from './routes/transparency'
 import { Route as RescueIndexRouteImport } from './routes/rescue.index'
 import { Route as RescueSlugRouteImport } from './routes/rescue.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminDonationsRouteImport } from './routes/_authenticated/admin.donations'
 import { Route as ApiPublicDonationsRouteImport } from './routes/api/public/donations'
+import { Route as AuthenticatedAdminCasesIndexRouteImport } from './routes/_authenticated/admin.cases.index'
+import { Route as AuthenticatedAdminCasesCaseIdRouteImport } from './routes/_authenticated/admin.cases.$caseId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,11 +67,29 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminDonationsRoute =
+  AuthenticatedAdminDonationsRouteImport.update({
+    id: '/admin/donations',
+    path: '/admin/donations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicDonationsRoute = ApiPublicDonationsRouteImport.update({
   id: '/api/public/donations',
   path: '/api/public/donations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminCasesIndexRoute =
+  AuthenticatedAdminCasesIndexRouteImport.update({
+    id: '/admin/cases/',
+    path: '/admin/cases/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminCasesCaseIdRoute =
+  AuthenticatedAdminCasesCaseIdRouteImport.update({
+    id: '/admin/cases/$caseId',
+    path: '/admin/cases/$caseId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -78,8 +99,11 @@ export interface FileRoutesByFullPath {
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/admin/cases/': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,8 +113,11 @@ export interface FileRoutesByTo {
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue': typeof RescueIndexRoute
+  '/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/admin/cases': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,8 +129,11 @@ export interface FileRoutesById {
   '/transparency': typeof TransparencyRoute
   '/rescue/$slug': typeof RescueSlugRoute
   '/rescue/': typeof RescueIndexRoute
+  '/_authenticated/admin/donations': typeof AuthenticatedAdminDonationsRoute
   '/api/public/donations': typeof ApiPublicDonationsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/cases/$caseId': typeof AuthenticatedAdminCasesCaseIdRoute
+  '/_authenticated/admin/cases/': typeof AuthenticatedAdminCasesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -115,8 +145,11 @@ export interface FileRouteTypes {
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue/'
+    | '/admin/donations'
     | '/api/public/donations'
     | '/admin/'
+    | '/admin/cases/$caseId'
+    | '/admin/cases/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -126,8 +159,11 @@ export interface FileRouteTypes {
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue'
+    | '/admin/donations'
     | '/api/public/donations'
     | '/admin'
+    | '/admin/cases/$caseId'
+    | '/admin/cases'
   id:
     | '__root__'
     | '/'
@@ -138,8 +174,11 @@ export interface FileRouteTypes {
     | '/transparency'
     | '/rescue/$slug'
     | '/rescue/'
+    | '/_authenticated/admin/donations'
     | '/api/public/donations'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/cases/$caseId'
+    | '/_authenticated/admin/cases/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -219,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/donations': {
+      id: '/_authenticated/admin/donations'
+      path: '/admin/donations'
+      fullPath: '/admin/donations'
+      preLoaderRoute: typeof AuthenticatedAdminDonationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/donations': {
       id: '/api/public/donations'
       path: '/api/public/donations'
@@ -226,15 +272,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicDonationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/cases/': {
+      id: '/_authenticated/admin/cases/'
+      path: '/admin/cases'
+      fullPath: '/admin/cases/'
+      preLoaderRoute: typeof AuthenticatedAdminCasesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/cases/$caseId': {
+      id: '/_authenticated/admin/cases/$caseId'
+      path: '/admin/cases/$caseId'
+      fullPath: '/admin/cases/$caseId'
+      preLoaderRoute: typeof AuthenticatedAdminCasesCaseIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminDonationsRoute: typeof AuthenticatedAdminDonationsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminCasesCaseIdRoute: typeof AuthenticatedAdminCasesCaseIdRoute
+  AuthenticatedAdminCasesIndexRoute: typeof AuthenticatedAdminCasesIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminDonationsRoute: AuthenticatedAdminDonationsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminCasesCaseIdRoute: AuthenticatedAdminCasesCaseIdRoute,
+  AuthenticatedAdminCasesIndexRoute: AuthenticatedAdminCasesIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
