@@ -147,13 +147,13 @@ export const adminSaveCase = createServerFn({ method: "POST" })
     const supabase = await admin();
     const { id, ...fields } = data;
     if (id) {
-      const { error } = await supabase.from("rescue_cases").update(fields).eq("id", id);
+      const { error } = await supabase.from("rescue_cases").update(fields as any).eq("id", id);
       if (error) throw new Error("Unable to save this case. The web address may already be used.");
       return { id };
     }
     const { data: created, error } = await supabase
       .from("rescue_cases")
-      .insert(fields)
+      .insert(fields as any)
       .select("id")
       .single();
     if (error) throw new Error("Unable to create this case. The web address may already be used.");
@@ -250,7 +250,7 @@ export const adminSaveUpdate = createServerFn({ method: "POST" })
   .handler(async ({ context, data }) => {
     await assertAdmin(context);
     const supabase = await admin();
-    const { error } = await supabase.from("case_updates").insert(data);
+    const { error } = await supabase.from("case_updates").insert(data as any);
     if (error) throw new Error("Unable to save this update");
     return { ok: true };
   });

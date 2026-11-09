@@ -52,8 +52,8 @@ async function uploadMedia(caseKey: string, file: File) {
 function useSigned(path: string | null) {
   const [url, setUrl] = useState<string | null>(null);
   useEffect(() => {
-    if (!path) return setUrl(null);
-    supabase.storage.from("case-media").createSignedUrl(path, 3600).then(({ data }) => setUrl(data?.signedUrl ?? null));
+    if (!path) { setUrl(null); return; }
+    void supabase.storage.from("case-media").createSignedUrl(path, 3600).then(({ data }) => setUrl(data?.signedUrl ?? null));
   }, [path]);
   return url;
 }
@@ -70,7 +70,7 @@ function MediaField({ label, path, onChange, caseKey }: { label: string; path: s
       <div className="mt-2 flex gap-2">
         <Input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" disabled={busy} onChange={async (e) => {
           const f = e.target.files?.[0]; if (!f) return;
-          if (f.size > 10 * 1024 * 1024) return toast.error("File must be under 10 MB");
+          if (f.size > 10 * 1024 * 1024) { toast.error("File must be under 10 MB"); return; }
           setBusy(true);
           try { onChange(await uploadMedia(caseKey, f)); toast.success("Uploaded"); } catch { toast.error("Upload failed"); }
           setBusy(false);
@@ -108,8 +108,8 @@ function CaseEditor() {
 
   async function save() {
     const amt = form.amount_required.trim() ? Number(form.amount_required) : null;
-    if (!form.animal_name.trim()) return toast.error("Animal name is required");
-    if (amt !== null && (!Number.isFinite(amt) || amt <= 0)) return toast.error("Amount required must be a positive number");
+    if (!form.animal_name.trim()) { toast.error("Animal name is required"); return; }
+    if (amt !== null && (!Number.isFinite(amt) || amt <= 0)) { toast.error("Amount required must be a positive number"); return; }
     setSaving(true);
     try {
       const r = await saveFn({ data: {
@@ -202,7 +202,7 @@ function UpdatesAndExpenses({ caseId, data }: { caseId: string; data: any }) {
           <Textarea placeholder="Description" value={u.description} onChange={(e) => setU({ ...u, description: e.target.value })} />
           <MediaField label="Optional image" path={u.image_url} onChange={(p) => setU({ ...u, image_url: p })} caseKey={caseId} />
           <Button onClick={async () => {
-            if (u.title.trim().length < 2) return toast.error("Title is required");
+            if (u.title.trim().length < 2) { toast.error("Title is required"); return; }
             await saveUpdate({ data: { case_id: caseId, ...u, update_type: u.update_type as any, description: u.description || null } });
             setU({ ...u, title: "", description: "", image_url: null }); refresh(); toast.success("Update posted");
           }}>Post update</Button>
@@ -225,7 +225,7 @@ function UpdatesAndExpenses({ caseId, data }: { caseId: string; data: any }) {
           <Input type="date" value={ex.expense_date} onChange={(e) => setEx({ ...ex, expense_date: e.target.value })} />
           <Button onClick={async () => {
             const amt = Number(ex.amount);
-            if (ex.label.trim().length < 2 || !Number.isFinite(amt) || amt < 0) return toast.error("Enter a label and valid amount");
+            if (ex.label.trim().length < 2 || !Number.isFinite(amt) || amt < 0) { toast.error("Enter a label and valid amount"); return; }
             await saveExpense({ data: { case_id: caseId, label: ex.label, amount: amt, expense_date: ex.expense_date } });
             setEx({ ...ex, label: "", amount: "" }); refresh();
           }}>Add</Button>
