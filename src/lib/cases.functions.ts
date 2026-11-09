@@ -107,10 +107,10 @@ export const getPublicCase = createServerFn({ method: "GET" })
       ...(row as PublicCase),
       amount_raised: Number(row.amount_raised ?? 0),
       amount_required: row.amount_required === null ? null : Number(row.amount_required),
-      animal_photo_url: photo,
-      poster_url: poster,
-      medical_bill_url: bill,
-      qr_code_url: qr,
+      animal_photo_url: photo ?? null,
+      poster_url: poster ?? null,
+      medical_bill_url: bill ?? null,
+      qr_code_url: qr ?? null,
     };
 
     return {
