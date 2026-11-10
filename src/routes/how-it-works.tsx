@@ -8,7 +8,10 @@ const STEPS = [
   { title: "Understand the case", body: "Read the case details entered by the administrator." },
   { title: "See the funding requirement", body: "Each case shows the exact amount required, raised and remaining." },
   { title: "Scan the VEGANFARM QR code", body: "Use the QR code on the case page with any supported UPI app." },
-  { title: "Donate any amount", body: "There is no fixed amount. You choose what you can contribute." },
+  {
+    title: "Donate any amount",
+    body: "Choose what you can contribute. Donors seeking 80G/12A documentation should note the ₹25,000 minimum and that VEGANFARM currently does not issue 80G receipts or offer tax-deductible donations.",
+  },
   { title: "Submit your payment details", body: "Enter your amount, name, mobile number, payment reference and upload your screenshot." },
   { title: "Receive your donation reference", body: "You get a unique reference ID such as VF-DON-2026-000001 to keep." },
   { title: "Verification", body: "Your donation stays pending until an administrator verifies the payment." },

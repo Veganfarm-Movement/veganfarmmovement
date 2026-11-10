@@ -151,14 +151,22 @@ export function DonationSection({
           <p className="eyebrow">Scan to donate</p>
           <img
             src={qrCodeUrl || DONATION_QR_URL}
-            alt="VEGANFARM donation QR code — scan with any UPI app"
+            alt="NiSwarth Seva 1008 Charitable Trust payment QR code — scan with any UPI app"
             width={720}
             height={1440}
             className="mt-3 w-full max-w-[320px] rounded-lg border border-border"
           />
-          <p className="mt-4 max-w-xl text-center text-sm text-muted-foreground">
+          <p className="mt-4 max-w-xl text-center text-sm font-medium text-foreground">
+            NiSwarth Seva 1008 Charitable Trust · UPI: niswarthseva1008@oksbi
+          </p>
+          <p className="mt-2 max-w-xl text-center text-sm text-muted-foreground">
             After completing your payment, enter your payment details below so the donation can be
             recorded against this rescue case.
+          </p>
+          <p className="mt-3 max-w-xl text-center text-sm text-muted-foreground">
+            For donors seeking 80G/12A documentation, the minimum donation is ₹25,000. VEGANFARM is
+            currently unregistered and does not issue 80G receipts; donations through this platform
+            are not tax deductible.
           </p>
         </div>
       </div>

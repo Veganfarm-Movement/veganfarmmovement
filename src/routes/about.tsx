@@ -53,7 +53,9 @@ function About() {
           <h2 className="text-lg font-bold text-foreground">Organisational status</h2>
           <p className="mt-2 text-sm text-muted-foreground">
             {BRAND.name} is not a registered NGO or registered charity. Donations made through this
-            platform are not tax deductible and no 80G receipt is issued.
+            platform are not tax deductible and no 80G receipt is issued. Donors seeking 80G/12A
+            documentation should note the stated minimum donation is ₹25,000; documentation is not
+            currently available through VEGANFARM.
           </p>
         </div>
 
