@@ -1,5 +1,5 @@
 import logoAsset from "@/assets/veganfarm-logo.png.asset.json";
-import qrAsset from "@/assets/veganfarm-upi-qr.png.asset.json";
+import qrAsset from "@/assets/veganfarm-payment-qr.png.asset.json";
 
 export const LOGO_URL = logoAsset.url;
 export const DONATION_QR_URL = qrAsset.url;
