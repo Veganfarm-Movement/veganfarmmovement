@@ -1,0 +1,3 @@
+- [ ] Complete authenticated donor case/policy Q&A with database-backed threads and AI Gateway grounding.
+- [ ] Add an admin mobile-size preview for the uploaded payment QR without altering the original image.
+- [ ] Clarify and build the separate customer-support chat request; its help documents, order-data source, and human handoff destination are not present in the project.
